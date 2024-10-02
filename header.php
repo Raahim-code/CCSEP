@@ -3,30 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vulnerability Demonstration App</title>
+    <title>DOM XSS Demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Vulnerability Demo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="nosql_injection.php">NoSQL Injection</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dom_xss.php">DOM XSS</a>
-                    </li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#">DOM XSS Demo</a>
         </div>
     </nav>
     <div class="container mt-4">
+        <h1 class="mb-4">Demonstration of DOM XSS</h1>
+        
+        <div class="mb-3">
+            <label for="userInput" class="form-label">Enter a Message:</label>
+            <input id="userInput" type="text" class="form-control" onkeyup="showMessage()">
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Output:</h5>
+                <p id="output" class="card-text"></p>
+            </div>
+        </div>
+
+        <h2 class="mt-4">Try It Out:</h2>
+        <p>Enter <code>&lt;img src=x onerror="alert('XSS!')"&gt;</code> to see the XSS in action.</p>
+
+        <script>
+            function showMessage() {
+                var userInput = document.getElementById('userInput').value;
+                // Vulnerable line for demonstration
+                document.getElementById('output').innerHTML = userInput; // This is where XSS can occur
+            }
+        </script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
